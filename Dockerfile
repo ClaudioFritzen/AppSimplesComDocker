@@ -11,11 +11,10 @@ WORKDIR /app
 COPY . .
 
 # Instala as dependências
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt gunicorn
 
 # Expõe a porta usada pela aplicação
 EXPOSE 5000
 
 # Comando para rodar o app
-CMD ["python", "app.py"]
-
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "app:app"]
